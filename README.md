@@ -61,7 +61,7 @@ Given a directory with `uv init` done and Django installed, this skill asks 7 ta
 Skills are loaded automatically when placed in `~/.claude/skills/<skill-name>/`. Use a symlink so the skill stays in version control while Claude Code reads it live:
 
 ```bash
-ln -s ~/Projects/django-scaffold-skill ~/.claude/skills/django-scaffold
+ln -s ~/Projects/django-scaffold-skill/django-scaffold ~/.claude/skills/django-scaffold
 ```
 
 Then invoke it from any project directory:
@@ -86,8 +86,8 @@ Paste the contents of `SKILL.md` directly into a Copilot Chat agent session and 
 
 | File | Purpose |
 | ---- | ------- |
-| `SKILL.md` | Skill definition — question flow and generation checklist |
-| `reference.md` | Authoritative templates and patterns for all generated files |
+| `django-scaffold/SKILL.md` | Skill definition — question flow and generation checklist |
+| `django-scaffold/reference.md` | Authoritative templates and patterns for all generated files |
 | `README.md` | This file |
 
 ## Acknowledgements
