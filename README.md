@@ -89,3 +89,9 @@ Paste the contents of `SKILL.md` directly into a Copilot Chat agent session and 
 | `SKILL.md` | Skill definition — question flow and generation checklist |
 | `reference.md` | Authoritative templates and patterns for all generated files |
 | `README.md` | This file |
+
+## Acknowledgements
+
+The interview questions style is inspired by [Cookiecutter Django](https://github.com/cookiecutter/cookiecutter-django), but with an AI-driven twist (directive but not deterministic) and far narrower focus.
+
+Much of the developer experience tooling (e.g., pre-commit) is inspired by [Adam Johnson](https://adamj.eu/)'s books and blog posts on production Django patterns.
