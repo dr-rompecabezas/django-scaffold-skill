@@ -1,7 +1,6 @@
 # Django Project Scaffold Reference
 
 *Authoritative preferences document for building a Django bootstrap skill*
-*Based on analysis of 10 projects + deployment investigation of 5 Railway-deployed apps*
 
 ---
 
@@ -133,7 +132,7 @@ templates/                        # At project root, not inside apps
 
 ## Settings Architecture
 
-**Always split: `base.py` + `local.py` + `production.py`** — even for API projects. Monolithic settings looked simpler in cropcycle-api/visionvitals but creates pain as projects grow.
+**Always split: `base.py` + `local.py` + `production.py`** — even for API projects. A monolithic settings file creates pain as projects grow.
 
 ### base.py — canonical patterns
 
@@ -502,7 +501,7 @@ The `|| true` is important — if `locale/` doesn't exist yet or `.po` files hav
 
 ## Deployment: railway.json
 
-This is the primary deployment configuration file. The canonical pattern (based on qlubpro — the most complete working example):
+This is the primary deployment configuration file. The canonical pattern:
 
 ```json
 {
@@ -626,7 +625,7 @@ Never use `AUTH_USER_MODEL = "auth.User"` — changing it after the first migrat
 
 ### users/models.py
 
-Email-based auth from the start: `username` removed, `email` is the login field. Based on qlubpro, without forced first/last name.
+Email-based auth from the start: `username` removed, `email` is the login field. No forced first/last name.
 
 ```python
 from django.contrib.auth.models import AbstractUser
@@ -1297,7 +1296,7 @@ The Tailwind **input** file lives in `assets/css/`, not `static/`. This avoids a
 }
 ```
 
-**Tailwind v4** is the current default (used in qlubpro, felipevillegas). In v4, `@tailwindcss/cli` is a separate package required for the CLI. No `tailwind.config.js` is needed for basic projects — configuration lives in the CSS file via `@theme` blocks.
+**Tailwind v4** is the current default. In v4, `@tailwindcss/cli` is a separate package required for the CLI. No `tailwind.config.js` is needed for basic projects — configuration lives in the CSS file via `@theme` blocks.
 
 ---
 
@@ -1400,26 +1399,25 @@ urlpatterns = [
 
 ## Known Deployment Bugs Fixed by This Standard
 
-The following were found in live projects and are addressed by this document:
+The following are common deployment bugs addressed by this document:
 
-| Bug | Project | Fix |
-| --- | ------- | --- |
-| Missing `--bind 0.0.0.0:$PORT` in gunicorn | multiple | Include in startCommand; Railway may handle it automatically with Railpack but be explicit |
-| No health check endpoint | thinkelearn | Required: `/health/` URL + view |
-| Missing `SECURE_REDIRECT_EXEMPT` | edesignhub | Always add `[r"^health/$"]` |
-| Wildcard `.railway.app` in ALLOWED_HOSTS | felipevillegas | Build from env var + Railway vars |
-| No `CSRF_TRUSTED_ORIGINS` auto-derivation | qlubpro, thinkelearn | Use SITE_URL + RAILWAY_PUBLIC_DOMAIN |
-| No production logging config | qlubpro, ctcmpao | Always define LOGGING in production.py |
-| No email backend in production | ctcmpao, felipevillegas | Always define with Mailtrap fallback |
-| No Sentry | ctcmpao | Always include, gated on SENTRY_DSN |
-| `traces_sample_rate=1.0` (100% trace) | edesignhub | Default 0.1; configurable via env |
-| Missing `conn_health_checks=True` | qlubpro, felipevillegas | Always include in database config |
-| Inconsistent `SECURE_HSTS_*` | qlubpro | Standardized in this document |
-| JSON parsing left in build command | felipevillegas | Build command should be clean |
-| `gunicorn` without timeout | most projects | Always `--timeout 120` |
-| No production.py validation | qlubpro, felipevillegas | Always validate required env vars |
+| Bug | Fix |
+| --- | --- |
+| Missing `--bind 0.0.0.0:$PORT` in gunicorn | Include in startCommand; Railway may handle it automatically with Railpack but be explicit |
+| No health check endpoint | Required: `/health/` URL + view |
+| Missing `SECURE_REDIRECT_EXEMPT` | Always add `[r"^health/$"]` |
+| Wildcard `.railway.app` in ALLOWED_HOSTS | Build from env var + Railway vars |
+| No `CSRF_TRUSTED_ORIGINS` auto-derivation | Use SITE_URL + RAILWAY_PUBLIC_DOMAIN |
+| No production logging config | Always define LOGGING in production.py |
+| No email backend in production | Always define with Mailtrap fallback |
+| No Sentry | Always include, gated on SENTRY_DSN |
+| `traces_sample_rate=1.0` (100% trace) | Default 0.1; configurable via env |
+| Missing `conn_health_checks=True` | Always include in database config |
+| Inconsistent `SECURE_HSTS_*` | Standardized in this document |
+| JSON parsing left in build command | Build command should be clean |
+| `gunicorn` without timeout | Always `--timeout 120` |
+| No production.py validation | Always validate required env vars |
 
 ---
 
 *Document version: 1.0 — March 2026*
-*Based on analysis of: qlubpro, cfas, felipevillegas, thinkelearn, ctcmpao, edesignhub, dj_pdc, GibdetColombiaChapter_UrbanTreeObservatory, cropcycle-api, visionvitals*
