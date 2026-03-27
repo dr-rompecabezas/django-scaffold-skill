@@ -2,6 +2,8 @@
 
 An AI agent skill that scaffolds new Django projects following a consistent set of production-ready patterns.
 
+<img width="1301" height="275" alt="image" src="https://github.com/user-attachments/assets/1faed8a2-52b8-495d-9414-a98dbac49906" />
+
 ## What It Does
 
 Given a directory with `uv init` done and Django installed, this skill asks 7 targeted questions and generates a complete, production-ready project structure — every file, configured correctly, with no placeholders.
