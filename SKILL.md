@@ -62,6 +62,18 @@ Once you have all seven answers, generate the complete project without further q
 
 ---
 
+## Version Resolution
+
+Before generating any files, look up the current versions using web search or available tools:
+
+- **Python** — latest stable release (e.g. python.org/downloads)
+- **Node.js** — latest LTS release (e.g. nodejs.org)
+- **Django** — latest LTS release, which is always the x.2 series (e.g. djangoproject.com/download)
+
+Use these resolved versions in `railpack.json` (`packages.python`, `packages.node`), `pyproject.toml` (`target-version`, `python_version`), and anywhere else a version string appears. Do not fall back to values from your training data.
+
+---
+
 ## Generation Checklist
 
 Generate **every file** in the list below. Use reference.md for all non-trivial templates.

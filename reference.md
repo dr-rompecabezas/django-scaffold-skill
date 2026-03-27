@@ -29,8 +29,8 @@ These are confirmed preferences — the scaffold should use them without asking:
 | CI/CD | **GitHub Actions** |
 | Pre-commit in CI | **Yes** — same hooks run in CI as locally |
 | Frontend styling | **Tailwind CSS** (via npm, not containerized) |
-| Python version | **3.13** |
-| Django version | **6.0.x** (latest stable) |
+| Python version | **latest stable** (look up at generation time) |
+| Django version | **latest LTS** — x.2 series (look up at generation time) |
 | Dependency management | **pyproject.toml + uv** |
 | Version control | **Git** with `.gitignore` |
 
@@ -459,11 +459,13 @@ Railway deprecated nixpacks in favor of Railpack. All new projects use Railpack.
 ```json
 {
   "packages": {
-    "node": "22",
-    "python": "3.13"
+    "node": "<latest LTS>",
+    "python": "<latest stable>"
   }
 }
 ```
+
+Look up the current Node.js LTS and Python stable versions at generation time — do not hardcode stale version strings.
 
 GeoDjango on Railway (PostGIS) requires additional apt packages in `railpack.json`, but this configuration has not been tested with Railpack. Do not scaffold it until a working deployment has been confirmed.
 
@@ -476,8 +478,8 @@ Two extra requirements when `compilemessages` is needed on Railway:
 ```json
 {
   "packages": {
-    "node": "22",
-    "python": "3.13"
+    "node": "<latest LTS>",
+    "python": "<latest stable>"
   },
   "buildAptPackages": ["gettext"],
   "deploy": {
@@ -1102,7 +1104,7 @@ Dependencies are managed with `uv add` — do not hardcode them in the scaffold.
 
 ```toml
 [tool.ruff]
-target-version = "py313"
+target-version = "py{XY}"  # replace with current Python major+minor, e.g. py314
 line-length = 88
 exclude = ["*/migrations/*"]
 
@@ -1143,7 +1145,7 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.mypy]
-python_version = "3.13"
+python_version = "3.X"  # replace with current Python major.minor, e.g. 3.14
 plugins = ["mypy_django_plugin.main"]
 # Checks untyped functions — catches issues without requiring full annotations
 check_untyped_defs = true
