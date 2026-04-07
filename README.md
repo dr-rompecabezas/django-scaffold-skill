@@ -4,18 +4,32 @@ An AI agent skill that scaffolds new Django projects following a consistent set 
 
 <img width="1301" height="275" alt="image" src="https://github.com/user-attachments/assets/1faed8a2-52b8-495d-9414-a98dbac49906" />
 
+## Installation
+
+```bash
+npx skills add dr-rompecabezas/django-scaffold-skill
+```
+
+This works with Claude Code, Codex, Cursor, and [40+ other agents](https://github.com/vercel-labs/skills).
+
+Then invoke it inside your agent session:
+
+```text
+/django-scaffold
+```
+
 ## What It Does
 
 Given a directory with `uv init` done and Django installed, this skill asks 7 targeted questions and generates a complete, production-ready project structure — every file, configured correctly, with no placeholders.
 
-## Assumed Starting Point
+### Assumed Starting Point
 
 - You are already inside the project directory
 - `uv init` has been run — `pyproject.toml` exists
 - `.venv` is created and activated
 - `django` (or `django` + `wagtail`) is already installed via `uv add`
 
-## Question Flow
+### Question Flow
 
 | # | Question | Options |
 | - | -------- | ------- |
@@ -27,7 +41,7 @@ Given a directory with `uv init` done and Django installed, this skill asks 7 ta
 | Q6 | Authentication | django-allauth / allauth + Google OAuth / built-in auth |
 | Q7 | Languages? | English only or multilingual list |
 
-## What Gets Generated
+### What Gets Generated
 
 **Root files:** `manage.py`, `pyproject.toml` (updated), `.env`, `.env.example`, `.gitignore`, `.pre-commit-config.yaml`, `railpack.json`, `railway.json`, `docker-compose.yml`, `package.json` *(full-stack only)*
 
@@ -41,7 +55,7 @@ Given a directory with `uv init` done and Django installed, this skill asks 7 ta
 
 **.github/workflows/:** `ci.yml` with pre-commit + pytest
 
-## Settled Conventions
+### Settled Conventions
 
 | Area | Decision |
 | ---- | -------- |
@@ -56,41 +70,16 @@ Given a directory with `uv init` done and Django installed, this skill asks 7 ta
 | Local services | Docker Compose (Postgres, pgAdmin, Mailpit, Redis/Celery if needed) |
 | Django itself | Runs directly in terminal — not containerized |
 
-## Usage
-
-### Claude Code
-
-Skills are loaded automatically when placed in `~/.claude/skills/<skill-name>/`. Use a symlink so the skill stays in version control while Claude Code reads it live:
-
-```bash
-ln -s ~/Projects/django-scaffold-skill/django-scaffold ~/.claude/skills/django-scaffold
-```
-
-Then invoke it from any project directory:
-
-```text
-/django-scaffold
-```
-
-Claude Code will ask the 7 questions one at a time, then generate all files in a single pass.
-
-### OpenAI Codex
-
-Add `SKILL.md` and `reference.md` as context files in your Codex session, then prompt:
-
-> Follow the instructions in SKILL.md to scaffold a new Django project.
-
-### GitHub Copilot (agent mode)
-
-Paste the contents of `SKILL.md` directly into a Copilot Chat agent session and ask it to proceed.
-
 ## Files
 
 | File | Purpose |
 | ---- | ------- |
-| `django-scaffold/SKILL.md` | Skill definition — question flow and generation checklist |
-| `django-scaffold/reference.md` | Authoritative templates and patterns for all generated files |
-| `README.md` | This file |
+| `skills/django-scaffold/SKILL.md` | Skill definition — question flow and generation checklist |
+| `skills/django-scaffold/reference.md` | Authoritative templates and patterns for all generated files |
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
